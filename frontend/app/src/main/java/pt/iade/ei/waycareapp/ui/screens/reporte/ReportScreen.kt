@@ -221,9 +221,9 @@ fun ReportScreen(navController: NavController) {
                 val reporte = Reporte(
                     id = 142,
                     utilizador = Utilizador(1, "Maria", "maria@email.com", "1234", "912345678"),
-                    obstaculo = Obstaculo(
+                    obstaculo = Anomalia(
                         id = 1,
-                        categoria = Categoria(1, tipoAnomalia, "Descrição automática"),
+                        categoria = TipoAnomalia(1, tipoAnomalia, "Descrição automática"),
                         descricao = descricao,
                         grauPerigo = prioridade
                     ),

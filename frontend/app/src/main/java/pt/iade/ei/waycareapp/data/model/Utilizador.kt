@@ -1,9 +1,8 @@
 package pt.iade.ei.waycareapp.data.model
 
 data class Utilizador(
-    val id: Long,
-    val nome: String,
-    val email: String,
-    val password: String,
-    val telefone: String
+    val uti_id: Long,
+    val uti_nome: String,
+    val uti_email: String,
+    val uti_password: String,
 )

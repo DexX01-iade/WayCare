@@ -1,8 +1,8 @@
 package pt.iade.ei.waycareapp.data.model
 
 data class Localizacao(
-    val id: Long,
-    val latitude: Double,
-    val longitude: Double,
-    val endereco: String
+    val loc_id: Long,
+    val loc_latitude: Double,
+    val loc_longitude: Double,
+    val loc_endereco: String
 )

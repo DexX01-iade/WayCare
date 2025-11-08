@@ -10,9 +10,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import pt.iade.ei.waycareapp.data.model.Categoria
+import pt.iade.ei.waycareapp.data.model.TipoAnomalia
 import pt.iade.ei.waycareapp.data.model.Localizacao
-import pt.iade.ei.waycareapp.data.model.Obstaculo
+import pt.iade.ei.waycareapp.data.model.Anomalia
 import pt.iade.ei.waycareapp.data.model.Reporte
 import pt.iade.ei.waycareapp.data.model.Utilizador
 
@@ -84,9 +84,9 @@ fun CardObstaculoPreview() {
     val mockReporte = Reporte(
         id = 1,
         utilizador = Utilizador(1, "Maria", "maria@email.com", "1234", "912345678"),
-        obstaculo = Obstaculo(
+        obstaculo = Anomalia(
             id = 1,
-            categoria = Categoria(1, "Passeio Bloqueado por Obras", "Obras na via"),
+            categoria = TipoAnomalia(1, "Passeio Bloqueado por Obras", "Obras na via"),
             descricao = "Passeio totalmente obstruído",
             grauPerigo = "Alto"
         ),

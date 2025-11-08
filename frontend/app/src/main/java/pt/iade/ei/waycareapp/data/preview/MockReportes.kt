@@ -1,8 +1,8 @@
 package pt.iade.ei.waycareapp.data.preview
 
-import pt.iade.ei.waycareapp.data.model.Categoria
+import pt.iade.ei.waycareapp.data.model.TipoAnomalia
 import pt.iade.ei.waycareapp.data.model.Localizacao
-import pt.iade.ei.waycareapp.data.model.Obstaculo
+import pt.iade.ei.waycareapp.data.model.Anomalia
 import pt.iade.ei.waycareapp.data.model.Reporte
 import pt.iade.ei.waycareapp.data.model.Utilizador
 import java.time.LocalDateTime
@@ -11,9 +11,9 @@ val mockReportes = listOf(
     Reporte(
         id = 1,
         utilizador = Utilizador(1, "Maria", "maria@email.com", "1234", "912345678"),
-        obstaculo = Obstaculo(
+        obstaculo = Anomalia(
             id = 1,
-            categoria = Categoria(1, "Rampa Inexistente", "Não há rampa de acesso"),
+            categoria = TipoAnomalia(1, "Rampa Inexistente", "Não há rampa de acesso"),
             descricao = "Sem rampa na entrada",
             grauPerigo = "Médio"
         ),
