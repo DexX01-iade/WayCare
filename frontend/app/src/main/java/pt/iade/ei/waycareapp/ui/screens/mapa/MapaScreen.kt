@@ -27,9 +27,9 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
-import pt.iade.ei.waycareapp.data.preview.mockReportes
 import pt.iade.ei.waycareapp.data.model.Reporte
 import pt.iade.ei.waycareapp.ui.component.CardObstaculo
+import pt.iade.ei.waycareapp.data.mock.mockReportes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("MissingPermission")
@@ -38,9 +38,8 @@ fun MapaScreen(navController: NavController) {
     val context = LocalContext.current
     var userLocation by remember { mutableStateOf<GeoPoint?>(null) }
     var reporteSelecionado by remember { mutableStateOf<Reporte?>(null) }
-    var filtroSelecionado by remember { mutableStateOf("Mostrar Tudo") } //guarda a opção escolhida no dropdown. Por exemplo: "Prioridade Alta", esta como default com mostrar tudo
+    var filtroSelecionado by remember { mutableStateOf("Mostrar Tudo") }
 
-    // Configuração do OSMDroid + localização
     LaunchedEffect(Unit) {
         Configuration.getInstance().userAgentValue = context.packageName
         Configuration.getInstance().load(
@@ -53,7 +52,7 @@ fun MapaScreen(navController: NavController) {
             location?.let {
                 userLocation = GeoPoint(it.latitude, it.longitude)
             } ?: run {
-                userLocation = GeoPoint(38.7169, -9.1399) // Fallback para Lisboa
+                userLocation = GeoPoint(38.7169, -9.1399)
             }
         }
     }
@@ -77,27 +76,25 @@ fun MapaScreen(navController: NavController) {
                     }
                     overlays.add(marker)
 
-                    //verifica o valor do filtro e seleciona apenas os reportes que correspondem à condição.
                     val reportesFiltrados = mockReportes.filter { reporte ->
                         when (filtroSelecionado) {
                             "Mostrar Tudo" -> true
-                            "Prioridade Alta" -> reporte.obstaculo.grauPerigo == "Alto"
-                            "Prioridade Média" -> reporte.obstaculo.grauPerigo == "Médio"
-                            "Prioridade Baixa" -> reporte.obstaculo.grauPerigo == "Baixo"
-                            "Mostrar Rampas Inexistentes" -> reporte.obstaculo.categoria.nome.contains("Rampa", ignoreCase = true)
-                            "Mostrar Passeios Danificados" -> reporte.obstaculo.categoria.nome.contains("Passeio", ignoreCase = true)
-                            "Mostrar passadeiras Mal sinalizadas" -> reporte.obstaculo.categoria.nome.contains("Passadeira", ignoreCase = true)
-                            "Mostrar Zonas Perigosas" -> reporte.obstaculo.categoria.nome.contains("Zonas", ignoreCase = true)
+                            "Prioridade Alta" -> reporte.rep_ano_id.ano_grau_perigo == "Alto"
+                            "Prioridade Média" -> reporte.rep_ano_id.ano_grau_perigo == "Médio"
+                            "Prioridade Baixa" -> reporte.rep_ano_id.ano_grau_perigo == "Baixo"
+                            "Mostrar Rampas Inexistentes" -> reporte.rep_ano_id.tip_id.tip_nome.contains("Rampa", ignoreCase = true)
+                            "Mostrar Passeios Danificados" -> reporte.rep_ano_id.tip_id.tip_nome.contains("Passeio", ignoreCase = true)
+                            "Mostrar passadeiras Mal sinalizadas" -> reporte.rep_ano_id.tip_id.tip_nome.contains("Passadeira", ignoreCase = true)
+                            "Mostrar Zonas Perigosas" -> reporte.rep_ano_id.tip_id.tip_nome.contains("Zonas", ignoreCase = true)
                             else -> true
                         }
                     }
 
-                    //adicionar os pins ao mapa com um forEach:
                     reportesFiltrados.forEach { reporte ->
                         val pin = Marker(this).apply {
-                            position = GeoPoint(reporte.localizacao.latitude, reporte.localizacao.longitude)
-                            title = reporte.obstaculo.categoria.nome
-                            subDescription = reporte.comentario
+                            position = GeoPoint(reporte.rep_loc_id.loc_latitude, reporte.rep_loc_id.loc_longitude)
+                            title = reporte.rep_ano_id.tip_id.tip_nome
+                            subDescription = reporte.rep_descricao
                             setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
                             setOnMarkerClickListener { _, _ ->
                                 reporteSelecionado = reporte
@@ -117,9 +114,6 @@ fun MapaScreen(navController: NavController) {
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            /*Comunicação entre componentes
-            Passamos esse estado para o MapaHeader, que por sua vez o passa para o FilterDropdown:
-            quando o utilizador escolhe uma opção no menu, o valor de filtroSelecionado é atualizado.*/
             MapaHeader(navController, filtroSelecionado) { novoFiltro ->
                 filtroSelecionado = novoFiltro
             }

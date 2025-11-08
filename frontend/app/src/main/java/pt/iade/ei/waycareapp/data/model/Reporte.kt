@@ -2,6 +2,7 @@ package pt.iade.ei.waycareapp.data.model
 
 import java.time.LocalDate
 
+
 data class Reporte(
     val rep_id: Long,
     val rep_uti_id: Utilizador,

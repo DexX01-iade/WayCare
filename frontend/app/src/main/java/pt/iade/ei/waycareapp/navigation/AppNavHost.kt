@@ -12,7 +12,6 @@ import pt.iade.ei.waycareapp.ui.screens.TelasDeUtilizador.RegisterScreen
 import pt.iade.ei.waycareapp.ui.screens.reporte.ReportScreen
 import pt.iade.ei.waycareapp.MainActivity
 import pt.iade.ei.waycareapp.ui.screens.mapa.MapaScreen
-import pt.iade.ei.waycareapp.data.model.Reporte
 import pt.iade.ei.waycareapp.ui.viewmodel.ReporteViewModel
 
 @Composable

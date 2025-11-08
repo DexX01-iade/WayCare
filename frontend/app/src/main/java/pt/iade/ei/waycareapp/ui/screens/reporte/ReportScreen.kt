@@ -21,13 +21,11 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import pt.iade.ei.waycareapp.data.model.*
@@ -57,7 +55,7 @@ fun ReportScreen(navController: NavController) {
         imagemUri = bitmap?.let {
             val drawable = BitmapDrawable(context.resources, it)
             drawable.toBitmap().let { bmp ->
-                Uri.EMPTY // substitui por lógica de gravação se quiseres guardar
+                Uri.EMPTY // lógica de gravação pode ser adicionada aqui
             }
         }
     }
@@ -110,7 +108,9 @@ fun ReportScreen(navController: NavController) {
             value = descricao,
             onValueChange = { if (it.length <= 1000) descricao = it },
             label = { Text("Descreva o Problema") },
-            modifier = Modifier.fillMaxWidth().height(100.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp),
             maxLines = 6
         )
 
@@ -204,50 +204,27 @@ fun ReportScreen(navController: NavController) {
                         color = Color(0xFF444444)
                     )
                 },
-                containerColor = Color(0xFFFFFFFF), // Fundo claro
+                containerColor = Color(0xFFFFFFFF),
                 shape = RoundedCornerShape(16.dp)
             )
         }
 
-
-
-
-
         val reporteViewModel: ReporteViewModel = viewModel()
-        // Botão Enviar Reporte
+
         BotaoGradiente(
             texto = "Enviar Reporte",
-            onClick = {
-                val reporte = Reporte(
-                    id = 142,
-                    utilizador = Utilizador(1, "Maria", "maria@email.com", "1234", "912345678"),
-                    obstaculo = Anomalia(
-                        id = 1,
-                        categoria = TipoAnomalia(1, tipoAnomalia, "Descrição automática"),
-                        descricao = descricao,
-                        grauPerigo = prioridade
-                    ),
-                    localizacao = Localizacao(
-                        id = 1,
-                        latitude = 38.7169,
-                        longitude = -9.1399,
-                        endereco = "Rua da Liberdade, 123 Lisboa"
-                    ),
-                    data = LocalDateTime.now().toString(),
-                    estado = "Pendente",
-                    comentario = detalhesLocalizacao
-                )
-
-                reporteViewModel.guardarReporte(reporte) // opcional
-                mostrarDialog = true
-            }
+            onClick = {navController.navigate("home")}
         )
-
     }
 }
 
 @Composable
-fun DropdownField(label: String, options: List<String>, selected: String, onSelect: (String) -> Unit) {
+fun DropdownField(
+    label: String,
+    options: List<String>,
+    selected: String,
+    onSelect: (String) -> Unit
+) {
     var expanded by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxWidth()) {
@@ -256,26 +233,30 @@ fun DropdownField(label: String, options: List<String>, selected: String, onSele
             onValueChange = {},
             label = { Text(label) },
             readOnly = true,
-            trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = "Abrir menu") },
+            trailingIcon = {
+                Icon(
+                    imageVector = Icons.Default.ArrowDropDown,
+                    contentDescription = "Abrir menu",
+                    modifier = Modifier.clickable { expanded = true }
+                )
+            },
             modifier = Modifier.fillMaxWidth()
         )
 
-        Box(modifier = Modifier.matchParentSize().clickable { expanded = true })
-
-        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier = Modifier.fillMaxWidth()) {
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier.fillMaxWidth()
+        ) {
             options.forEach { option ->
-                DropdownMenuItem(text = { Text(option) }, onClick = {
-                    onSelect(option)
-                    expanded = false
-                })
+                DropdownMenuItem(
+                    text = { Text(option) },
+                    onClick = {
+                        onSelect(option)
+                        expanded = false
+                    }
+                )
             }
         }
     }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun ReportScreenPreview() {
-    val fakeNavController = rememberNavController()
-    ReportScreen(navController = fakeNavController)
 }

@@ -30,7 +30,7 @@ fun CardObstaculo(reporte: Reporte, onClose: () -> Unit) {
 
             // Título principal
             Text(
-                text = reporte.obstaculo.categoria.nome,
+                text = reporte.rep_ano_id.tip_id.tip_nome,
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF000000)
@@ -40,7 +40,7 @@ fun CardObstaculo(reporte: Reporte, onClose: () -> Unit) {
 
             // Localização
             Text(
-                text = reporte.localizacao.endereco,
+                text = reporte.rep_loc_id.loc_endereco,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
                 color = Color(0xFF555555)
@@ -51,7 +51,7 @@ fun CardObstaculo(reporte: Reporte, onClose: () -> Unit) {
             // Descrição detalhada
             Text("Descrição:", fontWeight = FontWeight.SemiBold)
             Text(
-                text = reporte.comentario,
+                text = reporte.rep_descricao,
                 fontSize = 15.sp,
                 color = Color(0xFF333333)
             )
@@ -60,7 +60,7 @@ fun CardObstaculo(reporte: Reporte, onClose: () -> Unit) {
 
             // Reportado por
             Text(
-                text = "Reportado por: ${reporte.utilizador.nome} - ${reporte.utilizador.id} reporte(s)",
+                text = "Reportado por: ${reporte.rep_uti_id.uti_nome} - ${reporte.rep_uti_id.uti_id} reporte(s)",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
                 color = Color(0xFF3F51B5)
@@ -77,24 +77,3 @@ fun CardObstaculo(reporte: Reporte, onClose: () -> Unit) {
     }
 }
 
-
-@Preview(showBackground = true)
-@Composable
-fun CardObstaculoPreview() {
-    val mockReporte = Reporte(
-        id = 1,
-        utilizador = Utilizador(1, "Maria", "maria@email.com", "1234", "912345678"),
-        obstaculo = Anomalia(
-            id = 1,
-            categoria = TipoAnomalia(1, "Passeio Bloqueado por Obras", "Obras na via"),
-            descricao = "Passeio totalmente obstruído",
-            grauPerigo = "Alto"
-        ),
-        localizacao = Localizacao(1, 38.7169, -9.1399, "Rua da Liberdade 123, Lisboa"),
-        data = java.time.LocalDateTime.now().toString(),
-        estado = "Pendente",
-        comentario = "Espaço insuficiente para cadeiras de rodas"
-    )
-
-    CardObstaculo(reporte = mockReporte, onClose = {})
-}

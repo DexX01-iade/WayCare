@@ -1,25 +1,43 @@
-package pt.iade.ei.waycareapp.data.preview
+package pt.iade.ei.waycareapp.data.mock
 
-import pt.iade.ei.waycareapp.data.model.TipoAnomalia
-import pt.iade.ei.waycareapp.data.model.Localizacao
-import pt.iade.ei.waycareapp.data.model.Anomalia
-import pt.iade.ei.waycareapp.data.model.Reporte
-import pt.iade.ei.waycareapp.data.model.Utilizador
-import java.time.LocalDateTime
+import pt.iade.ei.waycareapp.data.model.*
 
 val mockReportes = listOf(
     Reporte(
-        id = 1,
-        utilizador = Utilizador(1, "Maria", "maria@email.com", "1234", "912345678"),
-        obstaculo = Anomalia(
-            id = 1,
-            categoria = TipoAnomalia(1, "Rampa Inexistente", "Não há rampa de acesso"),
-            descricao = "Sem rampa na entrada",
-            grauPerigo = "Médio"
+        rep_id = 1,
+        rep_uti_id = Utilizador(
+            uti_id = 101,
+            uti_nome = "Maria Silva",
+            uti_email = "maria@email.com",
+            uti_password = "1234"
         ),
-        localizacao = Localizacao(1, 38.717, -9.139, "Rua A"),
-        data = LocalDateTime.now().toString(),
-        estado = "Pendente",
-        comentario = "Muito difícil para cadeiras de rodas"
+        rep_ano_id = Anomalia(
+            ano_id = 201,
+            tip_id = TipoAnomalia(
+                tip_id = 1,
+                tip_nome = "Passeio Danificado"
+            ),
+            ano_descricao = "Buraco profundo no passeio",
+            ano_grau_perigo = "Alto"
+        ),
+        rep_tipo_personalizado = "Buraco onde dificulta travessia",
+        rep_loc_id = Localizacao(
+            loc_id = 301,
+            loc_latitude = 38.7169,
+            loc_longitude = -9.1399,
+            loc_endereco = "Rua da Liberdade, Lisboa"
+        ),
+        fotografia = Fotografia(
+            foto_id = 401,
+            foto_nome = "buraco.jpg",
+            foto_rep_id = 1,// para testar
+            foto_url = "https://example.com/buraco.jpg",
+            foto_caminho = "/imagens/buraco.jpg",
+            foto_mime = "image/jpeg",
+            foto_tamanho = 204800
+        ),
+        rep_estado = "Pendente",
+        rep_data = "2025-11-08",
+        rep_descricao = "Passeio com buraco perigoso junto à passadeira"
     )
 )
